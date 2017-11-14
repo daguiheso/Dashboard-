@@ -6,13 +6,13 @@ import { AngularFireModule } from 'angularfire2';
 import { AngularFireAuthModule } from 'angularfire2/auth';
 
 import { AuthComponent } from './auth.component';
+import { SignupComponent } from './signup/signup.component';
+import { SigninComponent } from './signin/signin.component';
+
 import { AuthService } from "./auth.service";
 
 import { RouterModule } from '@angular/router';
 import { AuthRoutes } from './auth.routing';
-
-import { SignupComponent } from './signup/signup.component';
-import { SigninComponent } from './signin/signin.component';
 
 import { environment } from '../../environments/environment';
 
@@ -22,7 +22,7 @@ import { environment } from '../../environments/environment';
     FormsModule,
     RouterModule.forChild(AuthRoutes),
     AngularFireModule.initializeApp(environment.firebase),
-    AngularFireAuthModule,
+    AngularFireAuthModule
   ],
   declarations: [
     AuthComponent,
