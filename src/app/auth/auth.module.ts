@@ -4,6 +4,7 @@ import { CommonModule } from '@angular/common';
 
 import { AngularFireModule } from 'angularfire2';
 import { AngularFireAuthModule } from 'angularfire2/auth';
+import { AngularFireDatabaseModule } from 'angularfire2/database';
 
 import { AuthComponent } from './auth.component';
 import { SignupComponent } from './signup/signup.component';
@@ -22,7 +23,8 @@ import { environment } from '../../environments/environment';
     FormsModule,
     RouterModule.forChild(AuthRoutes),
     AngularFireModule.initializeApp(environment.firebase),
-    AngularFireAuthModule
+    AngularFireAuthModule,
+    AngularFireDatabaseModule
   ],
   declarations: [
     AuthComponent,
