@@ -3,8 +3,7 @@
 <div class="container">
   <div class="col-sm-6 col-sm-offset-3">
     <h1>SignUp</h1>
-    <form #signupForm="ngForm" (ngSubmit)="createUser()">
-       hola - {{diagnostic}}
+    <form #signupForm="ngForm" (ngSubmit)="onSubmit(user)">
       <div class="form-group">
         <label for="firstName">Nombre</label>
         <input type="text" class="form-control" id="firstName" name="firstName" [(ngModel)]="user.firstName" required>
@@ -27,5 +26,9 @@
       </div>
       <button type="submit" class="btn btn-success" [disabled]="!signupForm.form.valid">Guardar</button>
     </form>
+  </div>
+  <hr>
+  <div *ngFor="let item of profiles | async">
+    <h3>{{ item.firstName }} {{ item.lastName }}</h3>
   </div>
 </div>
