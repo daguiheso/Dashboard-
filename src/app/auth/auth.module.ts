@@ -10,6 +10,9 @@ import { AuthComponent } from './auth.component';
 import { SignupComponent } from './signup/signup.component';
 import { SigninComponent } from './signin/signin.component';
 
+import { AngularFirestoreModule, AngularFirestore, AngularFirestoreCollection } from 'angularfire2/firestore';
+import * as firebase from 'firebase/app';
+
 import { AuthService } from "./auth.service";
 
 import { RouterModule } from '@angular/router';
@@ -24,7 +27,9 @@ import { environment } from '../../environments/environment';
     RouterModule.forChild(AuthRoutes),
     AngularFireModule.initializeApp(environment.firebase),
     AngularFireAuthModule,
-    AngularFireDatabaseModule
+    AngularFirestoreModule
+    // AngularFirestore,
+    // AngularFireDatabaseModule
   ],
   declarations: [
     AuthComponent,
@@ -32,7 +37,8 @@ import { environment } from '../../environments/environment';
     SigninComponent
   ],
   providers: [
-    AuthService
+    AuthService,
+    AngularFirestore
   ]
 })
 

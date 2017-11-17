@@ -11,13 +11,31 @@ export class SignupComponent implements OnInit {
 
   user: any = {};
 
-  constructor(private authService: AuthService) { }
+  constructor(private authService: AuthService) {}
 
   ngOnInit() {
   }
 
-  saveUser() {
-    this.authService.save(this.user)
+  onSubmit() {
+    this.user.role = null
+    this.authService.signIn(this.user)
+      .then(res => {
+        debugger
+      },
+      error => {
+        debugger
+
+      })
+  }
+
+  createUser() {
+    this.authService.createUser(this.user)
+      .then(res => {
+        debugger
+      },
+      error => {
+        debugger
+      })
   }
 
 }
