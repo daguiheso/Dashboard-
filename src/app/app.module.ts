@@ -43,6 +43,7 @@ import { AppRoutes } from './app.routing';
 
 import { RouterModule } from '@angular/router';
 import { AuthModule } from './auth/auth.module';
+import { DashboardModule } from './dashboard/dashboard.module';
 
 @NgModule({
   declarations: [
@@ -52,6 +53,7 @@ import { AuthModule } from './auth/auth.module';
     BrowserModule,
     RouterModule.forRoot(AppRoutes),
     AuthModule,
+    DashboardModule,
     BrowserAnimationsModule,
     NoopAnimationsModule,
     MatAutocompleteModule,

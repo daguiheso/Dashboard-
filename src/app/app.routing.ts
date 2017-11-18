@@ -1,7 +1,8 @@
 import { NgModule } from '@angular/core';
 import { Routes } from '@angular/router';
 
-import { AuthComponent } from './auth/auth.component'
+import { AuthComponent } from './auth/auth.component';
+import { DashboardComponent } from './dashboard/dashboard.component';
 
 export const AppRoutes: Routes = [
   // {
@@ -17,8 +18,11 @@ export const AppRoutes: Routes = [
         path: 'auth',
         loadChildren: './auth/auth.module#AuthModule'
       }
-
     ]
+  },
+  {
+    path: 'dashboard',
+    component: DashboardComponent,
   }
 ];
 
