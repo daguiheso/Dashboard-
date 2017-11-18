@@ -15,6 +15,9 @@ import { AuthService } from './auth.service';
 import { RouterModule } from '@angular/router';
 import { AuthRoutes } from './auth.routing';
 
+// Material
+import { MaterialModule } from '../material.module';
+
 import { environment } from '../../environments/environment';
 
 @NgModule({
@@ -24,7 +27,8 @@ import { environment } from '../../environments/environment';
     RouterModule.forChild(AuthRoutes),
     AngularFireModule.initializeApp(environment.firebase),
     AngularFirestoreModule,
-    AngularFireAuthModule
+    AngularFireAuthModule,
+    MaterialModule
   ],
   declarations: [
     AuthComponent,
