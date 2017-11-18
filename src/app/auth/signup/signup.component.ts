@@ -1,20 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { AuthService } from '../auth.service';
-import {
-  AngularFirestore,
-  AngularFirestoreCollection,
-  AngularFirestoreDocument
-} from 'angularfire2/firestore';
-import { Observable } from 'rxjs/Observable';
-import 'rxjs/add/operator/map';
-
-interface Profile {
-  firstName: string;
-  lastName: string;
-  phoneNumber: number;
-  email: string;
-  password?: string;
-}
+import { Profile } from '../auth.service';
 
 @Component({
   selector: 'app-signup',
@@ -26,13 +12,7 @@ export class SignupComponent implements OnInit {
 
   user: any = {};
 
-  profilesCollection: AngularFirestoreCollection<Profile>;
-  profiles: Observable<Profile[]>;
-
-  constructor(private authService: AuthService, private afs: AngularFirestore) {
-    this.profilesCollection = afs.collection<Profile>('profiles'); // reference
-    this.profiles = this.profilesCollection.valueChanges(); // observable of notes data
-  }
+  constructor(private authService: AuthService) {}
 
   ngOnInit() {
   }
@@ -41,7 +21,9 @@ export class SignupComponent implements OnInit {
     this.user.role = null;
     this.authService.signIn(this.user).then(
       res => {
-        this.profilesCollection.add(user)
+        debugger;
+        user.userId = res.uid;
+        this.authService.createUser(user)
           .then(res => {
             // debugger;
           },
