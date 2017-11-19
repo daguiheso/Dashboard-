@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { AuthService } from '../auth.service';
-import { Profile } from '../auth.service';
+import { Profile } from '../../models/auth.models';
 
 @Component({
   selector: 'app-signup',

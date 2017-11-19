@@ -1,0 +1,91 @@
+<p>
+  admin works!
+</p>
+<h1>Create Permission</h1>
+<br>
+<div>
+  <form #permissionForm="ngForm" (ngSubmit)="createPermission(permission)">
+    <div class="form-group">
+      <label for="namePermission">Nombre</label>
+      <input type="text" class="form-control" id="namePermission" name="namePermission" [(ngModel)]="permission.name" required>
+    </div>
+    <div class="form-group">
+      <label for="model">Modelo</label>
+      <input type="text" class="form-control" id="model" name="model" [(ngModel)]="permission.model" required>
+    </div>
+    <button type="submit" class="btn btn-success">Create permisse</button>
+  </form>
+</div>
+<br>
+<br>
+<br>
+<h1>Create Roles</h1>
+<br>
+<div>
+  <form #createRoleForm="ngForm" (ngSubmit)="createRole(role, listPermission)">
+    <div class="form-group">
+      <label for="nameRole">Nombre</label>
+      <input type="text" class="form-control" id="nameRole" name="nameRole" [(ngModel)]="role.name" required>
+    </div>
+    <div class="form-group">
+      <label for="model">Permisos</label>
+      <mat-checkbox *ngFor="let permission of listPermission" name="stateRole" [(ngModel)]="permission.checked">{{permission.name}} - {{ permission.model}}</mat-checkbox>
+    </div>
+    <button type="submit" class="btn btn-success">Create permisse</button>
+  </form>
+</div>
+<br>
+<br>
+<br>
+
+<div *ngFor="let role of roles">
+  <!-- {{ role.permissions }} -->
+  <div *ngFor="let permission of role.permissions">
+    {{ permission }} - {{ permission.model }}
+  </div>
+</div>
+<ul *ngIf="profiles?.length > 0;else noProfiles">
+  <li *ngFor="let profile of profiles">
+    <div>
+      {{ profile.firstName }} {{ profile.lastName }}
+      {{ profile | json }}
+    </div>
+    <br>
+    <a (click)="editProfile($event, profile)">Edit</a>
+    <div *ngIf="editState && profileToEdit.userId == profile.userId">
+      <hr>
+      <form #editProfileForm="ngForm" (ngSubmit)="editProfile(profile)">
+        <div class="form-group">
+          <label for="firstName">Nombre</label>
+          <input type="text" class="form-control" id="firstName" name="firstName" [(ngModel)]="profile.firstName" required>
+        </div>
+        <div class="form-group">
+          <label for="lastName">Apellido</label>
+          <input type="text" class="form-control" id="lastName" name="lastName" [(ngModel)]="profile.lastName" required>
+        </div>
+        <div class="form-group">
+          <label for="phoneNumber">Celular</label>
+          <input type="number" class="form-control" id="phoneNumber" name="phoneNumber" [(ngModel)]="profile.phoneNumber" required>
+        </div>
+        <div class="form-group">
+          <label for="email">email</label>
+          <input type="email" class="form-control" id="email" name="email" [(ngModel)]="profile.email" required>
+        </div>
+        <div class="form-group">
+          <label for="email">rol</label>
+          <select class="form-control" id="role" name="role" [(ngModel)]="profile.role" required>
+            <option *ngFor="let role of roles" [ngValue]="role">
+              {{role.name}}
+            </option>
+          </select>
+        </div>
+        <button type="submit" class="btn btn-success" >Actualizar</button>
+      </form>
+    </div>
+  </li>
+</ul>
+
+<ng-template #noProfiles>
+  <hr>
+  <h5>Loading</h5>
+</ng-template>

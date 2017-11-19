@@ -7,15 +7,7 @@ import {
 } from 'angularfire2/firestore';
 import { Observable } from 'rxjs/Observable';
 import 'rxjs/add/operator/map';
-
-export interface Profile {
-  firstName: string;
-  lastName: string;
-  phoneNumber: number;
-  email: string;
-  role?: string;
-  userId: string;
-}
+import { Profile } from '../models/auth.models';
 
 @Injectable()
 

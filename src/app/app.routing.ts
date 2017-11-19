@@ -3,6 +3,7 @@ import { Routes } from '@angular/router';
 
 import { AuthComponent } from './auth/auth.component';
 import { DashboardComponent } from './dashboard/dashboard.component';
+import { AdminComponent } from './admin/admin.component';
 
 export const AppRoutes: Routes = [
   // {
@@ -23,6 +24,10 @@ export const AppRoutes: Routes = [
   {
     path: 'dashboard',
     component: DashboardComponent,
+  },
+  {
+    path: 'admin',
+    component: AdminComponent,
   }
 ];
 
