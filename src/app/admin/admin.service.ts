@@ -19,7 +19,7 @@ export class AdminService {
   profilesDocuments: AngularFirestoreDocument<Profile>;
 
   snapshot: any;
-  role: Observable<Role[]>;
+  role: any;
 
   constructor(private afs: AngularFirestore) {
 
@@ -35,7 +35,14 @@ export class AdminService {
       });
 
     this.profilesDocuments = this.afs.doc<Profile>('/profiles/kKDVb4ZmweflUwVgj5fe')
-    this.role = this.profilesDocuments.collection<Role>('roles').valueChanges()
+    this.role = this.profilesDocuments.collection<Role>('roles').snapshotChanges()
+      .map(actions => {
+        return actions.map(res => {
+          const data = res.payload.doc.data() as Profile;
+          const id = res.payload.doc.id;
+          return { id, ...data };
+        });
+      });
 
       // this.rolesDocumnets = this.afs.doc('/roles/kbaOlmZ8UW0xazWT5ME7')
       // this.role = this.rolesDocumnets.valueChanges()
@@ -61,6 +68,14 @@ export class AdminService {
 
   public getRoles() {
     return this.role;
+  }
+
+  public updateProfile(profile: Profile) {
+    this.profilesDocuments = this.afs.doc<Profile>(`/profiles/${profile.id}/roles/${this.role}`)
+    // this.role = this.profilesDocuments.collection<Role>('roles').valueChanges()
+
+    // this.taskDoc = this.afs.doc(`tasks/${task.id}`);
+    // this.taskDoc.update(task);
   }
 
 }

@@ -31,7 +31,7 @@ export class AdminComponent implements OnInit {
     });
 
     this.adminService.getRoles().subscribe(roles => {
-
+      debugger
       this.roles = roles;
     },
     error => {
@@ -64,8 +64,10 @@ export class AdminComponent implements OnInit {
   }
 
   editProfile(event, profile) {
+    debugger
     this.editState = true;
     this.profileToEdit = profile;
+    this.adminService.updateProfile(profile)
   }
 
 }
