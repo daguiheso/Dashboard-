@@ -13,58 +13,36 @@ import { Permission } from '../models/admin.models';
 @Injectable()
 export class AdminService {
 
-  permissionsCollection: AngularFirestoreCollection<Permission>;
-  permissions: Observable<Permission[]>;
-
   profilesCollection: AngularFirestoreCollection<Profile>;
   profiles: Observable<Profile[]>;
 
-  rolesCollection: AngularFirestoreCollection<Role>;
-  roles: Observable<Role[]>;
-  snapshot: any;
+  profilesDocuments: AngularFirestoreDocument<Profile>;
 
-  rolesDocumnets: AngularFirestoreDocument<Role>;
-  role: Observable<Role>
+  snapshot: any;
+  role: Observable<Role[]>;
 
   constructor(private afs: AngularFirestore) {
 
-    this.permissionsCollection = afs.collection<Permission>('permissions');
-    this.permissions = this.permissionsCollection.valueChanges();
-    this.snapshot = this.permissionsCollection.snapshotChanges()
-      .map(actions => {
+    this.profilesCollection = afs.collection<Profile>('profiles'); // reference
 
-        return actions.map(a => {
-          const data = a.payload.doc.data();
-          const id = a.payload.doc.id;
+    this.profiles = this.profilesCollection.snapshotChanges()
+      .map(actions => {
+        return actions.map(res => {
+          const data = res.payload.doc.data() as Profile;
+          const id = res.payload.doc.id;
           return { id, ...data };
         });
       });
 
-    this.profilesCollection = afs.collection<Profile>('profiles'); // reference
-    this.profiles = this.profilesCollection.valueChanges(); // observable of notes data
+    this.profilesDocuments = this.afs.doc<Profile>('/profiles/kKDVb4ZmweflUwVgj5fe')
+    this.role = this.profilesDocuments.collection<Role>('roles').valueChanges()
 
-    this.rolesCollection = afs.collection<Role>('roles');
-    this.roles = this.rolesCollection.valueChanges();
-
-    // var db = firebase.firestore();
-    // this.snapshot = this.rolesCollection.snapshotChanges()
-    //   .map(actions => {
-    //     debugger
-    //     return actions.map(a => {
-    //       debugger
-    //       const data = a.payload.doc.data();
-    //       const id = a.payload.doc.id;
-    //       return { id, ...data };
-    //     });
-    //   });
-
-      this.rolesDocumnets = this.afs.doc('/roles/kbaOlmZ8UW0xazWT5ME7')
-      this.role = this.rolesDocumnets.valueChanges()
-
+      // this.rolesDocumnets = this.afs.doc('/roles/kbaOlmZ8UW0xazWT5ME7')
+      // this.role = this.rolesDocumnets.valueChanges()
   }
 
   public createPermission(permission: Permission) {
-    return this.permissionsCollection.add(permission)
+    // return this.permissionsCollection.add(permission)
   }
 
   public createRole(role: Role) {
@@ -78,14 +56,11 @@ export class AdminService {
 
   public getProfiles() {
     return this.profiles;
+    // return this.profiles;
   }
 
   public getRoles() {
-    return this.roles;
-  }
-
-  public getDoc() {
-    return this.snapshot
+    return this.role;
   }
 
 }

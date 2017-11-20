@@ -20,7 +20,6 @@ export class AdminComponent implements OnInit {
   editState: boolean = false;
   profileToEdit: Profile;
 
-
   constructor(private adminService: AdminService) {}
 
   ngOnInit() {
@@ -32,31 +31,25 @@ export class AdminComponent implements OnInit {
     });
 
     this.adminService.getRoles().subscribe(roles => {
-      // debugger
+
       this.roles = roles;
     },
     error => {
 
       });
 
-    this.adminService.getPermissions().subscribe(permissions => {
-      // debugger
-      this.listPermission = permissions;
-    },
-    error => {
-
-      });
+    this.adminService.getPermissions()
 
   }
 
   createPermission(permission: Permission) {
     this.adminService.createPermission(permission)
-      .then(res => {
-        debugger;
-      },
-      error => {
-        debugger;
-      });
+      // .then(res => {
+      //   debugger;
+      // },
+      // error => {
+      //   debugger;
+      // });
   }
 
   createRole(role: Role, permissions: Permission[]) {
