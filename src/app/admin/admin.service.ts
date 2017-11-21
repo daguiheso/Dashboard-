@@ -7,19 +7,19 @@ import {
 } from 'angularfire2/firestore';
 import { Observable } from 'rxjs/Observable';
 import 'rxjs/add/operator/map';
-import { Profile, Role } from '../models/auth.models';
-import { Permission } from '../models/admin.models';
+import { Profile, Role, Permission } from '../models/auth.models';
 
 @Injectable()
 export class AdminService {
 
   profilesCollection: AngularFirestoreCollection<Profile>;
   profiles: Observable<Profile[]>;
-
   profilesDocuments: AngularFirestoreDocument<Profile>;
+
 
   snapshot: any;
   role: any;
+  doc: any;
 
   allRolesCollection: AngularFirestoreCollection<any>;
   allRoles: Observable<any[]>;
@@ -63,6 +63,13 @@ export class AdminService {
       // this.role = this.rolesDocumnets.valueChanges()
   }
 
+  public updateDoc(profile: Profile) {
+    this.profilesDocuments = this.afs.doc<Profile>(`/profiles/${profile.id}`)
+    debugger
+    // return this.profilesCollection.doc(profile.id).update(profile)
+    return this.doc = this.profilesDocuments.collection<Role>('roles').doc(profile.id).update({name})
+  }
+
   public createPermission(permission: Permission) {
     // return this.permissionsCollection.add(permission)
   }
@@ -90,11 +97,12 @@ export class AdminService {
   }
 
   public updateProfile(profile: Profile) {
-    this.profilesDocuments = this.afs.doc<Profile>(`/profiles/${profile.id}/roles/${this.role}`)
+    // this.profilesDocuments = this.afs.doc<Profile>(`/profiles/${profile.id}/roles/${this.role}`)
     // this.role = this.profilesDocuments.collection<Role>('roles').valueChanges()
+    debugger
 
-    // this.taskDoc = this.afs.doc(`tasks/${task.id}`);
-    // this.taskDoc.update(task);
+    //update document
+    return this.profilesCollection.doc(profile.id).update(profile)
+
   }
-
 }

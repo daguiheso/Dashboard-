@@ -49,10 +49,30 @@ export class AdminComponent implements OnInit {
   }
 
   editProfile(event, profile) {
-    debugger
     this.editState = true;
     this.profileToEdit = profile;
+  }
+
+  updateProfile(event, profile) {
+    debugger
     this.adminService.updateProfile(profile)
+      .then(res => {
+        debugger
+      },
+      error => {
+        debugger
+      })
+  }
+
+  updateDoc(event, profile) {
+    // debugger
+    this.adminService.updateDoc(profile)
+      .then(res => {
+        debugger
+      },
+      error => {
+        debugger
+      })
   }
 
 }

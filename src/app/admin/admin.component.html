@@ -12,7 +12,8 @@
     <a (click)="editProfile($event, profile)">Edit</a>
     <div *ngIf="editState && profileToEdit.userId == profile.userId">
       <hr>
-      <form #editProfileForm="ngForm" (ngSubmit)="editProfile(profile)">
+      <!-- <form #editProfileForm="ngForm" (ngSubmit)="updateProfile($event, profile)"> -->
+      <form #editProfileForm="ngForm" (ngSubmit)="updateDoc($event, profile)">
         <div class="form-group">
           <label for="firstName">Nombre</label>
           <input type="text" class="form-control" id="firstName" name="firstName" [(ngModel)]="profile.firstName" required>
