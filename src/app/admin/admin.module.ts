@@ -1,19 +1,24 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { AdminComponent } from './admin.component';
-import { AdminService } from './admin.service';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
+import { RouterModule } from '@angular/router';
 import { MaterialModule } from '../material.module';
-import { DocPipe } from './doc.pipe';
+
+import { AdminComponent } from './admin.component';
+import { RolesComponent } from './roles/roles.component';
+import { PermissionsComponent } from './permissions/permissions.component';
+import { AdminService } from './admin.service';
+import { AuthRoutes } from './admin.routing';
 
 @NgModule({
   imports: [
     CommonModule,
     FormsModule,
+    RouterModule.forChild(AuthRoutes),
     MaterialModule
   ],
-  declarations: [AdminComponent, DocPipe],
+  declarations: [AdminComponent, PermissionsComponent, RolesComponent],
   providers: [AdminService]
 })
 export class AdminModule { }

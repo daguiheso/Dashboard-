@@ -1,49 +1,7 @@
 <p>
   admin works!
 </p>
-<h1>Create Permission</h1>
-<br>
-<div>
-  <form #permissionForm="ngForm" (ngSubmit)="createPermission(permission)">
-    <div class="form-group">
-      <label for="namePermission">Nombre</label>
-      <input type="text" class="form-control" id="namePermission" name="namePermission" [(ngModel)]="permission.name" required>
-    </div>
-    <div class="form-group">
-      <label for="model">Modelo</label>
-      <input type="text" class="form-control" id="model" name="model" [(ngModel)]="permission.model" required>
-    </div>
-    <button type="submit" class="btn btn-success">Create permisse</button>
-  </form>
-</div>
-<br>
-<br>
-<br>
-<h1>Create Roles</h1>
-<br>
-<div>
-  <form #createRoleForm="ngForm" (ngSubmit)="createRole(role, listPermission)">
-    <div class="form-group">
-      <label for="nameRole">Nombre</label>
-      <input type="text" class="form-control" id="nameRole" name="nameRole" [(ngModel)]="role.name" required>
-    </div>
-    <div class="form-group">
-      <label for="model">Permisos</label>
-      <mat-checkbox *ngFor="let permission of listPermission" name="stateRole" [(ngModel)]="permission.checked">{{permission.name}} - {{ permission.model}}</mat-checkbox>
-    </div>
-    <button type="submit" class="btn btn-success">Create permisse</button>
-  </form>
-</div>
-<br>
-<br>
-<br>
 
-<div *ngFor="let role of roles">
-  <!-- {{ role.permissions }} -->
-  <div *ngFor="let permission of role.permissions">
-    {{ permission }} - {{ permission.model }}
-  </div>
-</div>
 <ul *ngIf="profiles?.length > 0;else noProfiles">
   <li *ngFor="let profile of profiles">
     <div>
@@ -74,7 +32,7 @@
         <div class="form-group">
           <label for="email">rol</label>
           <select class="form-control" id="role" name="role" [(ngModel)]="profile.role" required>
-            <option *ngFor="let role of roles" [ngValue]="role">
+            <option *ngFor="let role of allRoles" [ngValue]="role">
               {{role.name}}
             </option>
           </select>
@@ -89,3 +47,4 @@
   <hr>
   <h5>Loading</h5>
 </ng-template>
+<router-outlet></router-outlet>

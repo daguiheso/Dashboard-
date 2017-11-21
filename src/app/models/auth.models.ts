@@ -13,3 +13,10 @@ export interface Role {
 	name: string;
 	permission: string[];
 }
+
+export interface Permission {
+	id: string;
+	name: string;
+	model: string;
+}
+

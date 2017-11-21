@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { AdminService } from './admin.service';
-import { Profile, Role } from '../models/auth.models';
-import { Permission } from '../models/admin.models';
+import { Profile, Role, Permission } from '../models/auth.models';
+
 
 @Component({
   selector: 'app-admin',
@@ -11,11 +11,9 @@ import { Permission } from '../models/admin.models';
 
 export class AdminComponent implements OnInit {
 
-  permission: any = {};
-  role: any = {};
-
   profiles: Profile[];
   roles: Role[];
+  allRoles: Role[];
   listPermission: Permission[];
   editState: boolean = false;
   profileToEdit: Profile;
@@ -31,8 +29,16 @@ export class AdminComponent implements OnInit {
     });
 
     this.adminService.getRoles().subscribe(roles => {
-      debugger
+      // debugger
       this.roles = roles;
+    },
+    error => {
+
+      });
+
+    this.adminService.getAllRoles().subscribe(roles => {
+      // debugger
+      this.allRoles = roles;
     },
     error => {
 
@@ -40,27 +46,6 @@ export class AdminComponent implements OnInit {
 
     this.adminService.getPermissions()
 
-  }
-
-  createPermission(permission: Permission) {
-    this.adminService.createPermission(permission)
-      // .then(res => {
-      //   debugger;
-      // },
-      // error => {
-      //   debugger;
-      // });
-  }
-
-  createRole(role: Role, permissions: Permission[]) {
-    debugger
-    this.adminService.createRole(role)
-      // .then(res => {
-      //   debugger;
-      // },
-      // error => {
-      //   debugger;
-      // });
   }
 
   editProfile(event, profile) {

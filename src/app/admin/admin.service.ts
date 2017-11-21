@@ -21,10 +21,13 @@ export class AdminService {
   snapshot: any;
   role: any;
 
+  allRolesCollection: AngularFirestoreCollection<any>;
+  allRoles: Observable<any[]>;
+
   constructor(private afs: AngularFirestore) {
 
+    // Get all profiles
     this.profilesCollection = afs.collection<Profile>('profiles'); // reference
-
     this.profiles = this.profilesCollection.snapshotChanges()
       .map(actions => {
         return actions.map(res => {
@@ -34,8 +37,20 @@ export class AdminService {
         });
       });
 
+    // Get profile
     this.profilesDocuments = this.afs.doc<Profile>('/profiles/kKDVb4ZmweflUwVgj5fe')
     this.role = this.profilesDocuments.collection<Role>('roles').snapshotChanges()
+      .map(actions => {
+        return actions.map(res => {
+          const data = res.payload.doc.data() as Profile;
+          const id = res.payload.doc.id;
+          return { id, ...data };
+        });
+      });
+
+    // Get list all Roles
+    this.allRolesCollection = afs.collection<Profile>('roles')
+    this.allRoles = this.allRolesCollection.snapshotChanges()
       .map(actions => {
         return actions.map(res => {
           const data = res.payload.doc.data() as Profile;
@@ -68,6 +83,10 @@ export class AdminService {
 
   public getRoles() {
     return this.role;
+  }
+
+  public getAllRoles() {
+    return this.allRoles;
   }
 
   public updateProfile(profile: Profile) {
