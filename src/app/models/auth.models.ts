@@ -10,8 +10,8 @@ export interface Profile {
 }
 
 export interface Role {
+	id?: string,
 	name: string;
-	permission: string[];
 }
 
 export interface Permission {

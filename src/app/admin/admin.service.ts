@@ -26,28 +26,6 @@ export class AdminService {
 
   constructor(private afs: AngularFirestore) {
 
-    // Get all profiles
-    this.profilesCollection = afs.collection<Profile>('profiles'); // reference
-    this.profiles = this.profilesCollection.snapshotChanges()
-      .map(actions => {
-        return actions.map(res => {
-          const data = res.payload.doc.data() as Profile;
-          const id = res.payload.doc.id;
-          return { id, ...data };
-        });
-      });
-
-    // Get list all Roles
-    this.allRolesCollection = afs.collection<Profile>('roles')
-    this.allRoles = this.allRolesCollection.snapshotChanges()
-      .map(actions => {
-        return actions.map(res => {
-          const data = res.payload.doc.data() as Profile;
-          const id = res.payload.doc.id;
-          return { id, ...data };
-        });
-      });
-
       // this.rolesDocumnets = this.afs.doc('/roles/kbaOlmZ8UW0xazWT5ME7')
       // this.role = this.rolesDocumnets.valueChanges()
   }
@@ -84,8 +62,15 @@ export class AdminService {
   }
 
   public getProfiles() {
-    return this.profiles;
-    // return this.profiles;
+    this.profilesCollection = this.afs.collection<Profile>('profiles');
+    return this.profilesCollection.snapshotChanges()
+      .map(actions => {
+        return actions.map(res => {
+          const data = res.payload.doc.data() as Profile;
+          const id = res.payload.doc.id;
+          return { id, ...data };
+        });
+      });
   }
 
   public getRoles() {
@@ -93,7 +78,15 @@ export class AdminService {
   }
 
   public getAllRoles() {
-    return this.allRoles;
+    this.allRolesCollection = this.afs.collection<Profile>('roles')
+    return  this.allRolesCollection.snapshotChanges()
+      .map(actions => {
+        return actions.map(res => {
+          const data = res.payload.doc.data() as Profile;
+          const id = res.payload.doc.id;
+          return { id, ...data };
+        });
+      });
   }
 
   public updateProfile(profile: Profile) {

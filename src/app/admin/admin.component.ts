@@ -13,7 +13,7 @@ export class AdminComponent implements OnInit {
 
   profiles: Profile[];
   roles: Role[];
-  allRoles: Role[];
+  allRoles: any[];
   listPermission: Permission[];
   editState: boolean = false;
   profileToEdit: Profile;
@@ -34,7 +34,6 @@ export class AdminComponent implements OnInit {
     // this.adminService.getRoles()
 
     this.adminService.getAllRoles().subscribe(roles => {
-      // debugger
       this.allRoles = roles;
     },
     error => {
