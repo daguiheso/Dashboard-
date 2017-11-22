@@ -18,7 +18,7 @@ export class AdminService {
 
 
   snapshot: any;
-  role: any;
+  role: Observable<any[]>;
   doc: any;
 
   allRolesCollection: AngularFirestoreCollection<any>;
@@ -29,17 +29,6 @@ export class AdminService {
     // Get all profiles
     this.profilesCollection = afs.collection<Profile>('profiles'); // reference
     this.profiles = this.profilesCollection.snapshotChanges()
-      .map(actions => {
-        return actions.map(res => {
-          const data = res.payload.doc.data() as Profile;
-          const id = res.payload.doc.id;
-          return { id, ...data };
-        });
-      });
-
-    // Get profile
-    this.profilesDocuments = this.afs.doc<Profile>('/profiles/kKDVb4ZmweflUwVgj5fe')
-    this.role = this.profilesDocuments.collection<Role>('roles').snapshotChanges()
       .map(actions => {
         return actions.map(res => {
           const data = res.payload.doc.data() as Profile;
@@ -65,9 +54,20 @@ export class AdminService {
 
   public updateDoc(profile: Profile) {
     this.profilesDocuments = this.afs.doc<Profile>(`/profiles/${profile.id}`)
-    debugger
-    // return this.profilesCollection.doc(profile.id).update(profile)
-    return this.doc = this.profilesDocuments.collection<Role>('roles').doc(profile.id).update({name})
+
+    // funciono para editar subcollection
+    // return this.profilesCollection.doc(profile.id).collection('roles').doc('PUuxPFBIEDn2Up8IWVJp').update({name: 'jajajaja'})
+
+    this.role = this.profilesDocuments.collection<Role>('roles').snapshotChanges()
+      .map(actions => {
+        return actions.map(res => {
+          const data = res.payload.doc.data() as Profile;
+          const id = res.payload.doc.id;
+          return { id, ...data };
+        });
+      });
+    return this.profilesDocuments.collection<Role>('roles').doc('PUuxPFBIEDn2Up8IWVJp').update({ name: 'superelojaja' })
+    // this.role = this.profilesDocuments.collection<Role>('roles').snapshotChanges()
   }
 
   public createPermission(permission: Permission) {
@@ -97,12 +97,24 @@ export class AdminService {
   }
 
   public updateProfile(profile: Profile) {
-    // this.profilesDocuments = this.afs.doc<Profile>(`/profiles/${profile.id}/roles/${this.role}`)
-    // this.role = this.profilesDocuments.collection<Role>('roles').valueChanges()
+    // update document
+    return this.profilesCollection.doc(profile.id).update(profile)
+      .then(res => {
+        debugger
+      })
+      .catch(err => {
+        debugger
+      })
+
+
+    // Update subcollection
+    // this.profilesDocuments = this.afs.doc<Profile>(`/profiles/${profile.id}`)
+    // this.profilesDocuments.collection<Role>('roles').doc('PUuxPFBIEDn2Up8IWVJp').update({ name: 'superelojaja' })
+  }
+
+  public assignRole(role: Role, profile: Profile) {
     debugger
 
-    //update document
-    return this.profilesCollection.doc(profile.id).update(profile)
-
+    return this.profilesCollection.doc(profile.id).collection('roles').add({name: role.name})
   }
 }

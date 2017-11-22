@@ -4,6 +4,8 @@
 
 <ul *ngIf="profiles?.length > 0;else noProfiles">
   <li *ngFor="let profile of profiles">
+    <br>
+    <br>
     <div>
       {{ profile.firstName }} {{ profile.lastName }}
       {{ profile | json }}
@@ -13,7 +15,7 @@
     <div *ngIf="editState && profileToEdit.userId == profile.userId">
       <hr>
       <!-- <form #editProfileForm="ngForm" (ngSubmit)="updateProfile($event, profile)"> -->
-      <form #editProfileForm="ngForm" (ngSubmit)="updateDoc($event, profile)">
+      <form #editProfileForm="ngForm" (ngSubmit)="updateProfile($event, profile)">
         <div class="form-group">
           <label for="firstName">Nombre</label>
           <input type="text" class="form-control" id="firstName" name="firstName" [(ngModel)]="profile.firstName" required>
@@ -30,15 +32,23 @@
           <label for="email">email</label>
           <input type="email" class="form-control" id="email" name="email" [(ngModel)]="profile.email" required>
         </div>
+        <button type="submit" class="btn btn-success" >Actualizar</button>
+      </form>
+    </div>
+    <br>
+    <br>
+    <a (click)="showEditRole($event, profile)">Assign Role</a>
+    <div *ngIf="isShowEditRole && profileToAssignRole.userId == profile.userId">
+      <form (ngSubmit)="assignRole(role, profile)">
         <div class="form-group">
           <label for="email">rol</label>
-          <select class="form-control" id="role" name="role" [(ngModel)]="profile.role" required>
+          <select class="form-control" id="role" name="role" [(ngModel)]="role.name" required>
             <option *ngFor="let role of allRoles" [ngValue]="role">
               {{role.name}}
             </option>
           </select>
         </div>
-        <button type="submit" class="btn btn-success" >Actualizar</button>
+        <button type="submit" class="btn btn-success">Assign Role</button>
       </form>
     </div>
   </li>

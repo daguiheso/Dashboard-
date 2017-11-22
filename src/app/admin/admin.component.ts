@@ -17,6 +17,9 @@ export class AdminComponent implements OnInit {
   listPermission: Permission[];
   editState: boolean = false;
   profileToEdit: Profile;
+  isShowEditRole: boolean = false;
+  profileToAssignRole: Profile;
+  role: {} = {};
 
   constructor(private adminService: AdminService) {}
 
@@ -28,13 +31,7 @@ export class AdminComponent implements OnInit {
 
     });
 
-    this.adminService.getRoles().subscribe(roles => {
-      // debugger
-      this.roles = roles;
-    },
-    error => {
-
-      });
+    // this.adminService.getRoles()
 
     this.adminService.getAllRoles().subscribe(roles => {
       // debugger
@@ -48,20 +45,29 @@ export class AdminComponent implements OnInit {
 
   }
 
-  editProfile(event, profile) {
+  editProfile(event, profile: Profile) {
     this.editState = true;
     this.profileToEdit = profile;
   }
 
-  updateProfile(event, profile) {
+  showEditRole(event, profile: Profile) {
+    this.isShowEditRole = true;
+    this.profileToAssignRole = profile;
+  }
+
+  assignRole(role: Role, profile: Profile) {
     debugger
-    this.adminService.updateProfile(profile)
+    this.adminService.assignRole(role, profile)
       .then(res => {
         debugger
       },
       error => {
         debugger
       })
+  }
+
+  updateProfile(event, profile) {
+    this.adminService.updateProfile(profile)
   }
 
   updateDoc(event, profile) {
