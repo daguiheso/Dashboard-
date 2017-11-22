@@ -12,7 +12,7 @@ import {
   MatProgressSpinnerModule,
   MatIconModule,
   MatListModule,
-  MatCheckboxModule
+  MatCheckboxModule,
 } from '@angular/material';
 
 @NgModule({

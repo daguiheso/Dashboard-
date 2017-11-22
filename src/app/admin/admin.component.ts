@@ -46,12 +46,12 @@ export class AdminComponent implements OnInit {
   }
 
   editProfile(event, profile: Profile) {
-    this.editState = true;
+    this.editState = !this.editState;
     this.profileToEdit = profile;
   }
 
   showEditRole(event, profile: Profile) {
-    this.isShowEditRole = true;
+    this.isShowEditRole = !this.isShowEditRole;
     this.profileToAssignRole = profile;
   }
 

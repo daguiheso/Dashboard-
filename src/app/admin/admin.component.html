@@ -8,7 +8,7 @@
       <mat-divider></mat-divider>
       <mat-list-item routerLink="/dashboard">Dashboard</mat-list-item>
       <mat-divider></mat-divider>
-      <mat-list-item routerLink="/admin">Products</mat-list-item>
+      <mat-list-item routerLink="/admin">Admin</mat-list-item>
       <mat-divider></mat-divider>
       <mat-nav-list>
         <mat-list-item routerLink="/admin/permissions">Admin/permissions</mat-list-item>
@@ -27,16 +27,18 @@
       </button>
     </mat-toolbar>
 
-    <ul *ngIf="profiles?.length > 0;else noProfiles">
-      <li *ngFor="let profile of profiles">
-        <br>
-        <br>
-        <div>
-          {{ profile.firstName }} {{ profile.lastName }} {{ profile | json }}
+
+
+    <ul *ngIf="profiles?.length > 0;else noProfiles" class="listItems">
+      <li *ngFor="let profile of profiles" class="listItems__item">
+        <div class="data">
+          {{ profile.firstName }} - {{ profile.lastName }} - {{ profile.email }} - {{ profile.phoneNumber }}
         </div>
-        <br>
-        <a (click)="editProfile($event, profile)">Edit</a>
-        <div *ngIf="editState && profileToEdit.userId == profile.userId">
+        <div class="actions">
+          <a (click)="editProfile($event, profile)">Edit</a>
+          <a (click)="showEditRole($event, profile)">Assign Role</a>
+        </div>
+        <div *ngIf="editState && profileToEdit.userId == profile.userId" class="editProfile">
           <hr>
           <!-- <form #editProfileForm="ngForm" (ngSubmit)="updateProfile($event, profile)"> -->
           <form #editProfileForm="ngForm" (ngSubmit)="updateProfile($event, profile)">
@@ -59,10 +61,7 @@
             <button type="submit" class="btn btn-success">Actualizar</button>
           </form>
         </div>
-        <br>
-        <br>
-        <a (click)="showEditRole($event, profile)">Assign Role</a>
-        <div *ngIf="isShowEditRole && profileToAssignRole.userId == profile.userId">
+        <div *ngIf="isShowEditRole && profileToAssignRole.userId == profile.userId" class="assignRole">
           <form (ngSubmit)="assignRole(role, profile)">
             <div class="form-group">
               <label for="email">rol</label>
@@ -82,8 +81,7 @@
       <hr>
       <h5>Loading</h5>
     </ng-template>
-
-
   </div>
 </mat-sidenav-container>
 <router-outlet></router-outlet>
+
