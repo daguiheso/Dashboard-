@@ -1,6 +1,7 @@
 import { NgModule } from '@angular/core';
-import { FormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
+import { FormsModule } from '@angular/forms';
+import { AuthRoutingModule } from './auth.routing.module';
 
 import { AngularFireModule } from 'angularfire2';
 import { AngularFirestoreModule } from 'angularfire2/firestore';
@@ -12,8 +13,6 @@ import { SigninComponent } from './signin/signin.component';
 
 import { AuthService } from './auth.service';
 
-import { RouterModule } from '@angular/router';
-import { AuthRoutes } from './auth.routing';
 
 // Material
 import { MaterialModule } from '../material.module';
@@ -24,11 +23,11 @@ import { environment } from '../../environments/environment';
   imports: [
     CommonModule,
     FormsModule,
-    RouterModule.forChild(AuthRoutes),
+    AuthRoutingModule,
     AngularFireModule.initializeApp(environment.firebase),
     AngularFirestoreModule,
     AngularFireAuthModule,
-    MaterialModule
+    MaterialModule,
   ],
   declarations: [
     AuthComponent,

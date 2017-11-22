@@ -1,0 +1,37 @@
+.mat-toolbar {
+	background: #ffd740;
+	border-bottom: 1px solid #bbb5b5;
+	button {
+		margin-left: 20px;
+	}
+}
+
+.base-container {
+	margin: 0;
+  width: 100%;
+	min-height: 100vh;
+	border: 1px solid rgba(0, 0, 0, 0.5);
+	&-sidenav {
+		padding: 20px;
+		&-content {
+			display: flex;
+			height: 100%;
+			align-items: center;
+			justify-content: center;
+		}
+	}
+}
+
+.loading {
+  position: fixed; /* or absolute */
+  top: 50%;
+  left: 50%;
+  margin-top: -50px;
+  margin-left: -100px;
+  transform: translate(-50%, -50%);
+}
+
+mat-sidenav {
+	width: 250px;
+	transition: .4s;
+}

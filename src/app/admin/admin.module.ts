@@ -5,20 +5,21 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { RouterModule } from '@angular/router';
 import { MaterialModule } from '../material.module';
 
+import { AdminRoutingModule } from './admin.routing.module';
 import { AdminComponent } from './admin.component';
 import { RolesComponent } from './roles/roles.component';
 import { PermissionsComponent } from './permissions/permissions.component';
 import { AdminService } from './admin.service';
-import { AuthRoutes } from './admin.routing';
 
 @NgModule({
   imports: [
     CommonModule,
     FormsModule,
-    RouterModule.forChild(AuthRoutes),
+    AdminRoutingModule,
     MaterialModule
   ],
   declarations: [AdminComponent, PermissionsComponent, RolesComponent],
   providers: [AdminService]
 })
+
 export class AdminModule { }

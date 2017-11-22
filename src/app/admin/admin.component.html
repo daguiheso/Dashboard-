@@ -1,61 +1,89 @@
-<mat-toolbar>
-  <span>Admin</span>
-</mat-toolbar>
+<mat-sidenav-container class="base-container">
+  <mat-sidenav #sidenav class="base-sidenav">
+    <!-- <button mat-mini-fab type="button" (click)="sidenav.close()">
+        <i class="material-icons">view_list</i>
+      </button> -->
+    <mat-nav-list>
+      <mat-list-item routerLink="/">Home</mat-list-item>
+      <mat-divider></mat-divider>
+      <mat-list-item routerLink="/dashboard">Dashboard</mat-list-item>
+      <mat-divider></mat-divider>
+      <mat-list-item routerLink="/admin">Products</mat-list-item>
+      <mat-divider></mat-divider>
+      <mat-nav-list>
+        <mat-list-item routerLink="/admin/permissions">Admin/permissions</mat-list-item>
+        <mat-divider></mat-divider>
+        <mat-list-item routerLink="/admin/roles">Admin/roles</mat-list-item>
+        <mat-divider></mat-divider>
+      </mat-nav-list>
+    </mat-nav-list>
+  </mat-sidenav>
 
-<ul *ngIf="profiles?.length > 0;else noProfiles">
-  <li *ngFor="let profile of profiles">
-    <br>
-    <br>
-    <div>
-      {{ profile.firstName }} {{ profile.lastName }}
-      {{ profile | json }}
-    </div>
-    <br>
-    <a (click)="editProfile($event, profile)">Edit</a>
-    <div *ngIf="editState && profileToEdit.userId == profile.userId">
+  <div class="base-sidenav-content">
+    <mat-toolbar>
+      <span class="title">Admin</span>
+      <button mat-mini-fab type="button" (click)="sidenav.open()">
+        <i class="material-icons">view_list</i>
+      </button>
+    </mat-toolbar>
+
+    <ul *ngIf="profiles?.length > 0;else noProfiles">
+      <li *ngFor="let profile of profiles">
+        <br>
+        <br>
+        <div>
+          {{ profile.firstName }} {{ profile.lastName }} {{ profile | json }}
+        </div>
+        <br>
+        <a (click)="editProfile($event, profile)">Edit</a>
+        <div *ngIf="editState && profileToEdit.userId == profile.userId">
+          <hr>
+          <!-- <form #editProfileForm="ngForm" (ngSubmit)="updateProfile($event, profile)"> -->
+          <form #editProfileForm="ngForm" (ngSubmit)="updateProfile($event, profile)">
+            <div class="form-group">
+              <label for="firstName">Nombre</label>
+              <input type="text" class="form-control" id="firstName" name="firstName" [(ngModel)]="profile.firstName" required>
+            </div>
+            <div class="form-group">
+              <label for="lastName">Apellido</label>
+              <input type="text" class="form-control" id="lastName" name="lastName" [(ngModel)]="profile.lastName" required>
+            </div>
+            <div class="form-group">
+              <label for="phoneNumber">Celular</label>
+              <input type="number" class="form-control" id="phoneNumber" name="phoneNumber" [(ngModel)]="profile.phoneNumber" required>
+            </div>
+            <div class="form-group">
+              <label for="email">email</label>
+              <input type="email" class="form-control" id="email" name="email" [(ngModel)]="profile.email" required>
+            </div>
+            <button type="submit" class="btn btn-success">Actualizar</button>
+          </form>
+        </div>
+        <br>
+        <br>
+        <a (click)="showEditRole($event, profile)">Assign Role</a>
+        <div *ngIf="isShowEditRole && profileToAssignRole.userId == profile.userId">
+          <form (ngSubmit)="assignRole(role, profile)">
+            <div class="form-group">
+              <label for="email">rol</label>
+              <select class="form-control" id="role" name="role" [(ngModel)]="role.name" required>
+                <option *ngFor="let role of allRoles" [ngValue]="role">
+                  {{role.name}}
+                </option>
+              </select>
+            </div>
+            <button type="submit" class="btn btn-success">Assign Role</button>
+          </form>
+        </div>
+      </li>
+    </ul>
+
+    <ng-template #noProfiles>
       <hr>
-      <!-- <form #editProfileForm="ngForm" (ngSubmit)="updateProfile($event, profile)"> -->
-      <form #editProfileForm="ngForm" (ngSubmit)="updateProfile($event, profile)">
-        <div class="form-group">
-          <label for="firstName">Nombre</label>
-          <input type="text" class="form-control" id="firstName" name="firstName" [(ngModel)]="profile.firstName" required>
-        </div>
-        <div class="form-group">
-          <label for="lastName">Apellido</label>
-          <input type="text" class="form-control" id="lastName" name="lastName" [(ngModel)]="profile.lastName" required>
-        </div>
-        <div class="form-group">
-          <label for="phoneNumber">Celular</label>
-          <input type="number" class="form-control" id="phoneNumber" name="phoneNumber" [(ngModel)]="profile.phoneNumber" required>
-        </div>
-        <div class="form-group">
-          <label for="email">email</label>
-          <input type="email" class="form-control" id="email" name="email" [(ngModel)]="profile.email" required>
-        </div>
-        <button type="submit" class="btn btn-success" >Actualizar</button>
-      </form>
-    </div>
-    <br>
-    <br>
-    <a (click)="showEditRole($event, profile)">Assign Role</a>
-    <div *ngIf="isShowEditRole && profileToAssignRole.userId == profile.userId">
-      <form (ngSubmit)="assignRole(role, profile)">
-        <div class="form-group">
-          <label for="email">rol</label>
-          <select class="form-control" id="role" name="role" [(ngModel)]="role.name" required>
-            <option *ngFor="let role of allRoles" [ngValue]="role">
-              {{role.name}}
-            </option>
-          </select>
-        </div>
-        <button type="submit" class="btn btn-success">Assign Role</button>
-      </form>
-    </div>
-  </li>
-</ul>
+      <h5>Loading</h5>
+    </ng-template>
 
-<ng-template #noProfiles>
-  <hr>
-  <h5>Loading</h5>
-</ng-template>
+
+  </div>
+</mat-sidenav-container>
 <router-outlet></router-outlet>
