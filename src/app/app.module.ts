@@ -1,5 +1,7 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 import { AppComponent } from './app.component';
 
 import { AppRoutes } from './app.routing';
@@ -10,8 +12,7 @@ import { DashboardModule } from './dashboard/dashboard.module';
 import { AdminModule } from './admin/admin.module';
 
 // Material
-import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { NoopAnimationsModule } from '@angular/platform-browser/animations';
+
 import { MaterialModule } from './material.module';
 
 @NgModule({
@@ -20,12 +21,12 @@ import { MaterialModule } from './material.module';
   ],
   imports: [
     BrowserModule,
+    BrowserAnimationsModule,
+    NoopAnimationsModule,
     RouterModule.forRoot(AppRoutes),
     AuthModule,
     DashboardModule,
     AdminModule,
-    BrowserAnimationsModule,
-    NoopAnimationsModule,
     MaterialModule
   ],
   providers: [],
