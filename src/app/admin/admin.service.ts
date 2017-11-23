@@ -27,9 +27,6 @@ export class AdminService {
   role: Observable<any[]>;
   doc: any;
 
-  allRolesCollection: AngularFirestoreCollection<any>;
-  allRoles: Observable<any[]>;
-
   constructor(private afs: AngularFirestore) {
 
       // this.rolesDocumnets = this.afs.doc('/roles/kbaOlmZ8UW0xazWT5ME7')
@@ -60,9 +57,15 @@ export class AdminService {
     return this.permissionsCollection.add(permission)
   }
 
+  public assignPermissionToRole(role: Role, permissions: Permission[]) {
+    return this.profilesCollection.doc(role.id).collection('permissions').add(permissions)
+  }
+
+
   public createRole(role: Role) {
     // debugger
-    // return this.rolesCollection.add(role)
+    this.rolesCollection = this.afs.collection<Role>('roles');
+    return this.rolesCollection.add(role)
   }
 
   public getPermissions() {
@@ -90,12 +93,8 @@ export class AdminService {
   }
 
   public getRoles() {
-    return this.role;
-  }
-
-  public getAllRoles() {
-    this.allRolesCollection = this.afs.collection<Role>('roles')
-    return  this.allRolesCollection.snapshotChanges()
+    this.rolesCollection = this.afs.collection<Role>('roles')
+    return  this.rolesCollection.snapshotChanges()
       .map(actions => {
         return actions.map(res => {
           const data = res.payload.doc.data() as Role;

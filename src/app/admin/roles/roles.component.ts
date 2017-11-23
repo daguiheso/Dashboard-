@@ -19,7 +19,7 @@ export class RolesComponent implements OnInit {
   constructor(private adminService: AdminService) { }
 
   ngOnInit() {
-    this.adminService.getAllRoles().subscribe(roles => {
+    this.adminService.getRoles().subscribe(roles => {
       this.roles = roles;
     },
     error => {
@@ -34,15 +34,25 @@ export class RolesComponent implements OnInit {
     });
   }
 
+  // showEditRole(event, profile: Profile) {
+  //   this.editState = !this.editState;
+  //   this.profileToEdit = profile;
+  // }
+
+  // showAssignPermisisons(event, profile: Profile) {
+  //   this.isShowEditRole = !this.isShowEditRole;
+  //   this.profileToAssignRole = profile;
+  // }
+
   createRole(role: Role, permissions: Permission) {
     debugger
-    // this.adminService.createRole(role)
-    // .then(res => {
-    //   debugger;
-    // },
-    // error => {
-    //   debugger;
-    // });
+    this.adminService.createRole(role)
+      .then(res => {
+        debugger;
+      },
+      error => {
+        debugger;
+      });
   }
 
 }

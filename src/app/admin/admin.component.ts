@@ -31,17 +31,6 @@ export class AdminComponent implements OnInit {
 
     });
 
-    // this.adminService.getRoles()
-
-    this.adminService.getAllRoles().subscribe(roles => {
-      this.allRoles = roles;
-    },
-    error => {
-
-      });
-
-    // this.adminService.getPermissions()
-
   }
 
   editProfile(event, profile: Profile) {
@@ -59,6 +48,7 @@ export class AdminComponent implements OnInit {
     this.adminService.assignRole(role, profile)
       .then(res => {
         debugger
+        this.adminService.assignPermissionToRole(role: Role, permissions: Permission[] )
       },
       error => {
         debugger
