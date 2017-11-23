@@ -5,3 +5,25 @@ body {
   font-family: Roboto, 'Helvetica Neue', sans-serif;
   margin: 0px;
 }
+
+.u {
+	&__center {
+		display: flex;
+		align-items: center;
+		justify-content: center;
+	}
+	&__form {
+		input, select, button {
+			border-radius: 8px;
+			padding: 8px;
+			margin-bottom: 8px;
+			outline: none;
+		}
+		button {
+			margin: 15px 0;
+		}
+	}
+}
+.container {
+  padding: 0 5%;
+}

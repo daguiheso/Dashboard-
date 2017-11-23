@@ -13,6 +13,8 @@ import {
   MatIconModule,
   MatListModule,
   MatCheckboxModule,
+  MatRadioModule,
+  MatSelectModule
 } from '@angular/material';
 
 @NgModule({
@@ -28,7 +30,9 @@ import {
     MatProgressSpinnerModule,
     MatIconModule,
     MatListModule,
-    MatCheckboxModule
+    MatCheckboxModule,
+    MatRadioModule,
+    MatSelectModule
   ],
   exports: [
     CommonModule,
@@ -42,7 +46,9 @@ import {
     MatProgressSpinnerModule,
     MatIconModule,
     MatListModule,
-    MatCheckboxModule
+    MatCheckboxModule,
+    MatRadioModule,
+    MatSelectModule
   ],
   declarations: []
 })

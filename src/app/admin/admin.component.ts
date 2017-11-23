@@ -40,7 +40,7 @@ export class AdminComponent implements OnInit {
 
       });
 
-    this.adminService.getPermissions()
+    // this.adminService.getPermissions()
 
   }
 

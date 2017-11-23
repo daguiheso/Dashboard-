@@ -12,10 +12,16 @@ import { Profile, Role, Permission } from '../models/auth.models';
 @Injectable()
 export class AdminService {
 
+  // Instance create list Roles
+  rolesCollection: AngularFirestoreCollection<Role>;
+  roles: Observable<Role[]>;
+  // Instance create list Permissions
+  permissionsCollection: AngularFirestoreCollection<Permission>;
+  permissions: Observable<Permission[]>;
+
   profilesCollection: AngularFirestoreCollection<Profile>;
   profiles: Observable<Profile[]>;
   profilesDocuments: AngularFirestoreDocument<Profile>;
-
 
   snapshot: any;
   role: Observable<any[]>;
@@ -49,7 +55,9 @@ export class AdminService {
   }
 
   public createPermission(permission: Permission) {
-    // return this.permissionsCollection.add(permission)
+    this.permissionsCollection = this.afs.collection<Permission>('permissions'); // reference
+    // this.permissions = this.permissionsCollection.valueChanges();
+    return this.permissionsCollection.add(permission)
   }
 
   public createRole(role: Role) {
@@ -58,7 +66,15 @@ export class AdminService {
   }
 
   public getPermissions() {
-    return this.snapshot;
+    this.permissionsCollection = this.afs.collection<Permission>('permissions')
+    return this.permissionsCollection.snapshotChanges()
+      .map(actions => {
+        return actions.map(res => {
+          const data = res.payload.doc.data() as Permission;
+          const id = res.payload.doc.id;
+          return { id, ...data };
+        });
+      });
   }
 
   public getProfiles() {
@@ -78,11 +94,11 @@ export class AdminService {
   }
 
   public getAllRoles() {
-    this.allRolesCollection = this.afs.collection<Profile>('roles')
+    this.allRolesCollection = this.afs.collection<Role>('roles')
     return  this.allRolesCollection.snapshotChanges()
       .map(actions => {
         return actions.map(res => {
-          const data = res.payload.doc.data() as Profile;
+          const data = res.payload.doc.data() as Role;
           const id = res.payload.doc.id;
           return { id, ...data };
         });

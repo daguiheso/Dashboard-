@@ -13,18 +13,18 @@ export class PermissionsComponent implements OnInit {
   permission: any = {};
 
   constructor(private adminService: AdminService) {
-    this.adminService.getPermissions()
+
   }
 
   ngOnInit() {}
 
   createPermission(permission: Permission) {
-    this.adminService.createPermission(permission);
-    // .then(res => {
-    //   debugger;
-    // },
-    // error => {
-    //   debugger;
-    // });
+    this.adminService.createPermission(permission)
+      .then(res => {
+        debugger;
+      },
+      error => {
+        debugger;
+      });
   }
 }

@@ -1,0 +1,35 @@
+.listItems {
+	padding: 25px;
+	border: 1px solid #bbb5b5;
+	margin: 3% 3%;
+	&__item {
+		display: flex;
+		align-items: center;
+		flex-wrap: wrap;
+		justify-content: space-between;
+		.data {
+			width: 60%;
+			height: 50px;
+			display: flex;
+			align-items: center;
+			font-weight: bold;
+			color: #6b6767;
+		}
+		.actions {
+			display: flex;
+			align-items: center;
+			a {
+				display: inline-block;
+				border: 1px solid #bbb5b5;
+				padding: 10px;
+				cursor: pointer;
+			}
+		}
+		.editProfile {
+			width: 100%;
+		}
+		.assignRole {
+			width: 100%;
+		}
+	}
+}

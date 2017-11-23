@@ -1,18 +1,33 @@
-<p>
-  roles works!
-</p>
-<h1>Create Roles</h1>
-<br>
-<div>
-  <form #createRoleForm="ngForm" (ngSubmit)="createRole(role, listPermission)">
-    <div class="form-group">
-      <label for="nameRole">Nombre</label>
-      <input type="text" class="form-control" id="nameRole" name="nameRole" [(ngModel)]="role.name" required>
-    </div>
-    <div class="form-group">
-      <label for="model">Permisos</label>
-      <mat-checkbox *ngFor="let permission of listPermission" name="stateRole" [(ngModel)]="permission.checked">{{permission.name}} - {{ permission.model}}</mat-checkbox>
-    </div>
-    <button type="submit" class="btn btn-success">Create permisse</button>
-  </form>
-</div>
+  <ul class="listItems">
+    <li *ngFor="let role of roles" class="listItems__item">
+      <div class="data">
+        {{role.name}}
+      </div>
+      <div class="actions">
+        <a (click)="editRole($event, profile)">Edit</a>
+        <a (click)="showEditRole($event, profile)">Assign Role</a>
+      </div>
+    </li>
+  </ul>
+  <h1>Create Roles</h1>
+  <br>
+  <div>
+    <form #createRoleForm="ngForm" (ngSubmit)="createRole(role, permissionsSelected)" class="u__form">
+      <div class="form-group">
+        <label for="nameRole">Nombre</label>
+        <input type="text" class="form-control" id="nameRole" name="nameRole" [(ngModel)]="role.name" required>
+      </div>
+      <br>
+      <mat-form-field>
+        <mat-select placeholder="Permiso" [(ngModel)]="permissionsSelected" name="permission" multiple>
+          <mat-option *ngFor="let permission of permissions" [value]="permission">{{permission.name}} - {{permission.model}}</mat-option>
+        </mat-select>
+      </mat-form-field>
+
+      <!-- <div class="form-group">
+        <label for="model">Permisos</label>
+        <mat-checkbox *ngFor="let permission of permissions" name="stateRole" [(ngModel)]="permission.checked"> {{permission.name}} - {{ permission.model}}</mat-checkbox>
+      </div> -->
+      <button type="submit" class="btn btn-success">Create permisse</button>
+    </form>
+  </div>
