@@ -5,7 +5,7 @@ import { Permission } from '../../models/auth.models';
 @Component({
   selector: "app-permissions",
   templateUrl: "./permissions.component.html",
-  styleUrls: ["./permissions.component.scss"]
+  styleUrls: []
 })
 
 export class PermissionsComponent implements OnInit {

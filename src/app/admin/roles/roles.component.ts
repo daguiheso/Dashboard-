@@ -6,7 +6,7 @@ import { Profile, Role, Permission } from '../../models/auth.models';
 @Component({
   selector: 'app-roles',
   templateUrl: './roles.component.html',
-  styleUrls: ['./roles.component.scss']
+  styleUrls: ['../admin.component.scss']
 })
 
 export class RolesComponent implements OnInit {
