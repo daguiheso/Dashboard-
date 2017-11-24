@@ -13,40 +13,41 @@ import { Profile, Role, Permission } from '../models/auth.models';
 export class AdminService {
 
   // Instance create list Roles
-  rolesCollection: AngularFirestoreCollection<Role>;
+  rolesCol: AngularFirestoreCollection<Role>;
   roles: Observable<Role[]>;
   // Instance create list Permissions
-  permissionsCollection: AngularFirestoreCollection<Permission>;
+  permissionsCol: AngularFirestoreCollection<Permission>;
   permissions: Observable<Permission[]>;
 
-  profilesCollection: AngularFirestoreCollection<Profile>;
+  profilesCol: AngularFirestoreCollection<Profile>;
   profiles: Observable<Profile[]>;
-  profilesDocuments: AngularFirestoreDocument<Profile>;
+  profilesDoc: AngularFirestoreDocument<Profile>;
 
-  snapshot: any;
   role: Observable<any[]>;
-  doc: any;
 
   constructor(private afs: AngularFirestore) {}
 
   public createPermission(permission: Permission) {
-    this.permissionsCollection = this.afs.collection<Permission>('permissions'); // reference
-    return this.permissionsCollection.add(permission)
+    this.permissionsCol = this.afs.collection<Permission>('permissions'); // reference
+    return this.permissionsCol.add(permission)
+  }
+
+  public updatePermission(permission: Permission) {
+    return this.permissionsCol.doc(permission.id).update(permission)
   }
 
   public assignPermissionToRole(roleId, permissions: Permission[]) {
-    return this.rolesCollection.doc(roleId).collection('permissions').add({ list: permissions })
+    return this.rolesCol.doc(roleId).collection('permissions').add({ list: permissions })
   }
 
-
   public createRole(role: Role) {
-    this.rolesCollection = this.afs.collection<Role>('roles');
-    return this.rolesCollection.add(role)
+    this.rolesCol = this.afs.collection<Role>('roles');
+    return this.rolesCol.add(role)
   }
 
   public getPermissions() {
-    this.permissionsCollection = this.afs.collection<Permission>('permissions')
-    return this.permissionsCollection.snapshotChanges()
+    this.permissionsCol = this.afs.collection<Permission>('permissions')
+    return this.permissionsCol.snapshotChanges()
       .map(actions => {
         return actions.map(res => {
           const data = res.payload.doc.data() as Permission;
@@ -57,8 +58,8 @@ export class AdminService {
   }
 
   public getProfiles() {
-    this.profilesCollection = this.afs.collection<Profile>('profiles');
-    return this.profilesCollection.snapshotChanges()
+    this.profilesCol = this.afs.collection<Profile>('profiles');
+    return this.profilesCol.snapshotChanges()
       .map(actions => {
         return actions.map(res => {
           const data = res.payload.doc.data() as Profile;
@@ -69,12 +70,12 @@ export class AdminService {
   }
 
   public getRoles() {
-    this.rolesCollection = this.afs.collection<Role>('roles'
+    this.rolesCol = this.afs.collection<Role>('roles'
       // , ref => {
       // ref.where('firstName', '==', 'Daniel')
       // }
     )
-    return  this.rolesCollection.snapshotChanges()
+    return  this.rolesCol.snapshotChanges()
       .map(actions => {
         return actions.map(res => {
           const data = res.payload.doc.data() as Role;
@@ -85,16 +86,10 @@ export class AdminService {
   }
 
   public updateProfile(profile: Profile) {
-    return this.profilesCollection.doc(profile.id).update(profile)
-      .then(res => {
-        debugger
-      })
-      .catch(err => {
-        debugger
-      })
+    return this.profilesCol.doc(profile.id).update(profile)
   }
 
   public assignRoleToProfile(role: Role, profile: Profile) {
-    return this.profilesCollection.doc(profile.id).collection('roles').add(role)
+    return this.profilesCol.doc(profile.id).collection('roles').add(role)
   }
 }
