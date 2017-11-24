@@ -44,13 +44,16 @@ export class RolesComponent implements OnInit {
   //   this.profileToAssignRole = profile;
   // }
 
-  createRole(role: Role, permissions: Permission) {
-    debugger
+  createRole(role: Role, permissions: Permission[]) {
     this.adminService.createRole(role)
       .then(res => {
-        debugger;
-      },
-      error => {
+        this.adminService.assignPermissionToRole(res.id, permissions)
+          .then(res => {
+            debugger
+          }, error => {
+            debugger
+          })
+      }, error => {
         debugger;
       });
   }

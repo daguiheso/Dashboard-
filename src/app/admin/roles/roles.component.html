@@ -5,7 +5,6 @@
       </div>
       <div class="actions">
         <a (click)="editRole($event, profile)">Edit</a>
-        <a (click)="showEditRole($event, profile)">Assign Permission</a>
       </div>
     </li>
   </ul>
@@ -23,11 +22,6 @@
           <mat-option *ngFor="let permission of permissions" [value]="permission">{{permission.name}} - {{permission.model}}</mat-option>
         </mat-select>
       </mat-form-field>
-
-      <!-- <div class="form-group">
-        <label for="model">Permisos</label>
-        <mat-checkbox *ngFor="let permission of permissions" name="stateRole" [(ngModel)]="permission.checked"> {{permission.name}} - {{ permission.model}}</mat-checkbox>
-      </div> -->
       <button type="submit" class="btn btn-success">Create permisse</button>
     </form>
   </div>

@@ -27,43 +27,19 @@ export class AdminService {
   role: Observable<any[]>;
   doc: any;
 
-  constructor(private afs: AngularFirestore) {
-
-      // this.rolesDocumnets = this.afs.doc('/roles/kbaOlmZ8UW0xazWT5ME7')
-      // this.role = this.rolesDocumnets.valueChanges()
-  }
-
-  public updateDoc(profile: Profile) {
-    this.profilesDocuments = this.afs.doc<Profile>(`/profiles/${profile.id}`)
-
-    // funciono para editar subcollection
-    // return this.profilesCollection.doc(profile.id).collection('roles').doc('PUuxPFBIEDn2Up8IWVJp').update({name: 'jajajaja'})
-
-    this.role = this.profilesDocuments.collection<Role>('roles').snapshotChanges()
-      .map(actions => {
-        return actions.map(res => {
-          const data = res.payload.doc.data() as Profile;
-          const id = res.payload.doc.id;
-          return { id, ...data };
-        });
-      });
-    return this.profilesDocuments.collection<Role>('roles').doc('PUuxPFBIEDn2Up8IWVJp').update({ name: 'superelojaja' })
-    // this.role = this.profilesDocuments.collection<Role>('roles').snapshotChanges()
-  }
+  constructor(private afs: AngularFirestore) {}
 
   public createPermission(permission: Permission) {
     this.permissionsCollection = this.afs.collection<Permission>('permissions'); // reference
-    // this.permissions = this.permissionsCollection.valueChanges();
     return this.permissionsCollection.add(permission)
   }
 
-  public assignPermissionToRole(role: Role, permissions: Permission[]) {
-    return this.profilesCollection.doc(role.id).collection('permissions').add(permissions)
+  public assignPermissionToRole(roleId, permissions: Permission[]) {
+    return this.rolesCollection.doc(roleId).collection('permissions').add({ list: permissions })
   }
 
 
   public createRole(role: Role) {
-    // debugger
     this.rolesCollection = this.afs.collection<Role>('roles');
     return this.rolesCollection.add(role)
   }
@@ -93,7 +69,11 @@ export class AdminService {
   }
 
   public getRoles() {
-    this.rolesCollection = this.afs.collection<Role>('roles')
+    this.rolesCollection = this.afs.collection<Role>('roles'
+      // , ref => {
+      // ref.where('firstName', '==', 'Daniel')
+      // }
+    )
     return  this.rolesCollection.snapshotChanges()
       .map(actions => {
         return actions.map(res => {
@@ -105,7 +85,6 @@ export class AdminService {
   }
 
   public updateProfile(profile: Profile) {
-    // update document
     return this.profilesCollection.doc(profile.id).update(profile)
       .then(res => {
         debugger
@@ -113,16 +92,9 @@ export class AdminService {
       .catch(err => {
         debugger
       })
-
-
-    // Update subcollection
-    // this.profilesDocuments = this.afs.doc<Profile>(`/profiles/${profile.id}`)
-    // this.profilesDocuments.collection<Role>('roles').doc('PUuxPFBIEDn2Up8IWVJp').update({ name: 'superelojaja' })
   }
 
-  public assignRole(role: Role, profile: Profile) {
-    debugger
-
-    return this.profilesCollection.doc(profile.id).collection('roles').add({name: role.name})
+  public assignRoleToProfile(role: Role, profile: Profile) {
+    return this.profilesCollection.doc(profile.id).collection('roles').add(role)
   }
 }

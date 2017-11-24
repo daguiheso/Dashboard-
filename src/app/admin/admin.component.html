@@ -63,10 +63,10 @@
             </form>
           </div>
           <div *ngIf="isShowEditRole && profileToAssignRole.userId == profile.userId" class="assignRole">
-            <form (ngSubmit)="assignRole(role, profile)">
+            <form (ngSubmit)="assignRoleToProfile(roleSelected, profile)">
               <div class="form-group">
                 <label for="email">rol</label>
-                <select class="form-control" id="role" name="role" [(ngModel)]="role.name" required>
+                <select class="form-control" id="role" name="role" [(ngModel)]="roleSelected" required>
                   <option *ngFor="let role of roles" [ngValue]="role">
                     {{role.name}}
                   </option>

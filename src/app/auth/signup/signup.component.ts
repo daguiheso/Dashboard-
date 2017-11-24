@@ -18,10 +18,8 @@ export class SignupComponent implements OnInit {
   }
 
   onSubmit(user: Profile) {
-    this.user.role = null;
     this.authService.signIn(this.user).then(
       res => {
-        debugger;
         user.userId = res.uid;
         this.authService.createUser(user)
           .then(res => {

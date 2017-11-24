@@ -13,21 +13,24 @@ export class AdminComponent implements OnInit {
 
   profiles: Profile[];
   roles: Role[];
-  allRoles: any[];
-  listPermission: Permission[];
   editState: boolean = false;
   profileToEdit: Profile;
   isShowEditRole: boolean = false;
   profileToAssignRole: Profile;
-  role: {} = {};
+  // role: {} = {};
 
   constructor(private adminService: AdminService) {}
 
   ngOnInit() {
     this.adminService.getProfiles().subscribe(profiles => {
       this.profiles = profiles;
-    },
-    error => {
+    }, error => {
+
+    });
+
+    this.adminService.getRoles().subscribe(roles => {
+      this.roles = roles;
+    }, error => {
 
     });
 
@@ -43,12 +46,10 @@ export class AdminComponent implements OnInit {
     this.profileToAssignRole = profile;
   }
 
-  assignRole(role: Role, profile: Profile) {
-    debugger
-    this.adminService.assignRole(role, profile)
+  assignRoleToProfile(role: Role, profile: Profile) {
+    this.adminService.assignRoleToProfile(role, profile)
       .then(res => {
         debugger
-        this.adminService.assignPermissionToRole(role: Role, permissions: Permission[] )
       },
       error => {
         debugger
@@ -57,17 +58,6 @@ export class AdminComponent implements OnInit {
 
   updateProfile(event, profile) {
     this.adminService.updateProfile(profile)
-  }
-
-  updateDoc(event, profile) {
-    // debugger
-    this.adminService.updateDoc(profile)
-      .then(res => {
-        debugger
-      },
-      error => {
-        debugger
-      })
   }
 
 }
