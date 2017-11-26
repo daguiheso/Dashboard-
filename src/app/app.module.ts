@@ -15,6 +15,8 @@ import { AdminModule } from './admin/admin.module';
 
 // Material
 import { MaterialModule } from './material.module';
+import { AppService } from './app.service';
+import { ComponentsModule } from './components/components.module';
 
 
 @NgModule({
@@ -30,9 +32,10 @@ import { MaterialModule } from './material.module';
     AuthModule,
     DashboardModule,
     AdminModule,
-    MaterialModule
+    MaterialModule,
+    ComponentsModule
   ],
-  providers: [],
+  providers: [AppService],
   bootstrap: [AppComponent]
 })
 

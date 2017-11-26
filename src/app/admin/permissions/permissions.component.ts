@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { AdminService } from '../admin.service';
 import { Permission } from '../../models/auth.models';
+import { AppService } from "../../app.service";
 
 @Component({
   selector: "app-permissions",
@@ -15,9 +16,7 @@ export class PermissionsComponent implements OnInit {
   isShowFormUpdatePermission: boolean = false;
   permissionToEdit: Permission;
 
-  constructor(private adminService: AdminService) {
-
-  }
+  constructor(private adminService: AdminService, private appService: AppService) { }
 
   ngOnInit() {
     this.adminService.getPermissions().subscribe(permissions => {
@@ -36,9 +35,9 @@ export class PermissionsComponent implements OnInit {
   createPermission(permission: Permission) {
     this.adminService.createPermission(permission)
       .then(res => {
-        debugger;
+        this.appService.showSwal('success-message')
       }, error => {
-        debugger;
+        this.appService.showSwal('cancel')
       });
     }
 

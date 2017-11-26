@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
-import { FormControl } from '@angular/forms';
 import { AdminService } from '../admin.service';
 import { Profile, Role, Permission } from '../../models/auth.models';
+import { AppService } from "../../app.service";
 
 @Component({
   selector: 'app-roles',
@@ -14,47 +14,100 @@ export class RolesComponent implements OnInit {
   roles: Role[];
   permissions: Permission[];
   role: any = {};
-  toppings = new FormControl();
+  isShowEditRole: boolean = false;
+  rolToEdit: Role;
+  isShowEditPermissionsToRole: boolean = false;
+  rolToEditPermissions: Role;
+  rolePermissions: Permission[];
+  actualColPermissions: string;
 
-  constructor(private adminService: AdminService) { }
+
+  constructor(private adminService: AdminService, private appService: AppService) { }
 
   ngOnInit() {
     this.adminService.getRoles().subscribe(roles => {
       this.roles = roles;
-    },
-    error => {
+    }, error => {
 
-      });
+    });
 
     this.adminService.getPermissions().subscribe(permissions => {
       this.permissions = permissions;
-    },
-    error => {
+    }, error => {
 
     });
   }
 
-  // showEditRole(event, profile: Profile) {
-  //   this.editState = !this.editState;
-  //   this.profileToEdit = profile;
-  // }
+  showEditRole(event, role: Role) {
+    this.isShowEditRole = !this.isShowEditRole;
+    this.rolToEdit = role;
+  }
 
-  // showAssignPermisisons(event, profile: Profile) {
-  //   this.isShowEditRole = !this.isShowEditRole;
-  //   this.profileToAssignRole = profile;
-  // }
+  showEditPermissionsToRole(event, role: Role, permission: Permission) {
+    this.isShowEditPermissionsToRole = !this.isShowEditPermissionsToRole
+    this.rolToEditPermissions = role;
+    for (let i = 0; i < this.permissions.length; i++) this.permissions[i].checked = false;
+
+    this.getRolPermissions(role)
+  }
+
+  selectPermission(permission: Permission) {
+    permission.checked = !permission.checked
+  }
+
+  getRolPermissions(role: Role) {
+    this.adminService.getRolePermissions(role).subscribe(res => {
+      res.map(res => {
+        this.actualColPermissions = res.id
+        this.rolePermissions = res.list
+        for (let i = 0; i < this.rolePermissions.length; i++) {
+          for (let j = 0; j < this.permissions.length; j++) {
+            if (this.rolePermissions[i].id == this.permissions[j].id) {
+              this.permissions[j].checked = true;
+            }
+          }
+        }
+      })
+    }, error => {
+      this.appService.showSwal('cancel')
+    })
+  }
 
   createRole(role: Role, permissions: Permission[]) {
     this.adminService.createRole(role)
       .then(res => {
         this.adminService.assignPermissionToRole(res.id, permissions)
           .then(res => {
-            debugger
+            this.appService.showSwal('success-message')
           }, error => {
-            debugger
+            this.appService.showSwal('cancel')
           })
       }, error => {
         debugger;
+      });
+  }
+
+  updateRole(role: Role) {
+    this.adminService.updateRole(role)
+      .then(res => {
+        this.appService.showSwal('success-message')
+      }, error => {
+        this.appService.showSwal('cancel')
+      });
+  }
+
+  updatePermissionsToRole(role: Role) {
+    let permissions = []
+    for (let i = 0; i < this.permissions.length; i++) {
+      if (this.permissions[i].checked) {
+        permissions.push(this.permissions[i])
+      }
+    }
+    this.adminService.updatePermissionsToRole(role.id, this.actualColPermissions, permissions)
+      .then(res => {
+        this.appService.showSwal('success-message')
+      }, error => {
+        this.appService.showSwal('cancel')
       });
   }
 

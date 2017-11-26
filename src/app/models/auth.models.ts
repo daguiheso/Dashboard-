@@ -9,13 +9,21 @@ export interface Profile {
 }
 
 export interface Role {
-	id?: string,
+	id?: string;
 	name: string;
+	list?: any[];
 }
 
 export interface Permission {
 	id: string;
 	name: string;
 	model: string;
+	checked?: boolean;
+}
+
+export interface RolePermissions {
+	id: string;
+	list: Permission[];
+	// checked?: boolean;
 }
 
