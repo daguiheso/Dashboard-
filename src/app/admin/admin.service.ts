@@ -41,10 +41,17 @@ export class AdminService {
     return this.permissionsCol.doc(permission.id).update(permission)
   }
 
+  public deletePermission(permission: Permission) {
+    return this.permissionsCol.doc(permission.id).delete()
+  }
+
+  public deleteRole(role: Role) {
+    return this.rolesCol.doc(role.id).delete()
+  }
   public updateRole(role: Role) {
-    debugger
     return this.rolesCol.doc(role.id).update(role)
   }
+
 
   public assignPermissionToRole(roleId, permissions: Permission[]) {
     return this.rolesCol.doc(roleId).collection('permissions').add({ list: permissions })
@@ -106,7 +113,6 @@ export class AdminService {
         });
       });
   }
-
 
   public updateProfile(profile: Profile) {
     return this.profilesCol.doc(profile.id).update(profile)

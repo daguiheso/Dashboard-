@@ -38,6 +38,7 @@ export class RolesComponent implements OnInit {
     });
   }
 
+  // Logic GUI
   showEditRole(event, role: Role) {
     this.isShowEditRole = !this.isShowEditRole;
     this.rolToEdit = role;
@@ -55,6 +56,7 @@ export class RolesComponent implements OnInit {
     permission.checked = !permission.checked
   }
 
+  // Methods
   getRolPermissions(role: Role) {
     this.adminService.getRolePermissions(role).subscribe(res => {
       res.map(res => {
@@ -89,6 +91,15 @@ export class RolesComponent implements OnInit {
 
   updateRole(role: Role) {
     this.adminService.updateRole(role)
+      .then(res => {
+        this.appService.showSwal('success-message')
+      }, error => {
+        this.appService.showSwal('cancel')
+      });
+  }
+
+  deleteRole(role: Role) {
+    this.adminService.deleteRole(role)
       .then(res => {
         this.appService.showSwal('success-message')
       }, error => {
