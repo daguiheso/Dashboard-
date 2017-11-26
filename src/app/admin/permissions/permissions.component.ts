@@ -24,7 +24,6 @@ export class PermissionsComponent implements OnInit {
     }, error => {
 
     });
-
   }
 
   toggleFormUpdatePermission(event, permission: Permission) {
@@ -39,14 +38,23 @@ export class PermissionsComponent implements OnInit {
       }, error => {
         this.appService.showSwal('cancel')
       });
-    }
+  }
+
+  deletePermission(permission: Permission) {
+    this.adminService.deletePermission(permission)
+      .then(res => {
+        this.appService.showSwal('success-message')
+      }, error => {
+        this.appService.showSwal('cancel')
+      });
+  }
 
   updatePermission(permission: Permission) {
     this.adminService.updatePermission(permission)
       .then(res => {
-        debugger;
+        this.appService.showSwal('success-message')
       }, error => {
-        debugger;
+        this.appService.showSwal('cancel')
       });
   }
 }
